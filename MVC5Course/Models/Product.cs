@@ -23,9 +23,14 @@ namespace MVC5Course.Models
     
         public int ProductId { get; set; }
         [Required(ErrorMessage ="請輸入商品名稱")]
+        [MinLength(3),MaxLength(30)]
+        [RegularExpression("(.+)-(.+)")]
         public string ProductName { get; set; }
+        [Range(0,9999)]
         public Nullable<decimal> Price { get; set; }
         public Nullable<bool> Active { get; set; }
+        [Required]
+        [Range(0,100,ErrorMessage ="請設定正確的商品價格名稱")]
         public Nullable<decimal> Stock { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
