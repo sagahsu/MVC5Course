@@ -19,7 +19,7 @@ namespace MVC5Course.Controllers
         {
             //return View(db.Product.ToList());
             //return View(db.Product.Take(10));//只取十筆
-            var data = db.Product.Where(p=>p.Active.HasValue && p.Active.Value == Active)
+            var data = db.Product.Where(p=>p.Active.HasValue && p.Active.Value == Active)//NULL值處理用.HasValue()
                 .OrderByDescending(p => p.ProductId).Take(10);
             return View(data);
         }
