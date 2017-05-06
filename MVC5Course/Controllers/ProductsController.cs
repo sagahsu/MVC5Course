@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using MVC5Course.Model.ViewModel;
 
 namespace MVC5Course.Controllers
 {
@@ -14,6 +15,16 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities1 db = new FabricsEntities1();
 
+        public ActionResult ListProducts()
+        {
+            var data = db.Product.Where(p => p.Active.Value == true)//NULL值處理用.HasValue()
+                .Select(p => new ProductListVM()
+                {
+                     ProductName = p.ProductName,
+                     Price= p.Price
+                }).Take(10);
+            return View(data);
+        }
         // GET: Products
         public ActionResult Index(bool Active = true)
         {
