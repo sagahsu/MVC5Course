@@ -181,9 +181,14 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EFController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Models\usp_Fabrics_Result.cs">
+      <DependentUpon>Fabrics.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModel\ProductVM.cs" />
     <Compile Include="Models\ViewModel\ProductListVM.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -349,6 +354,11 @@
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\ListProducts.cshtml" />
+    <Content Include="Views\EF\Create.cshtml" />
+    <Content Include="Views\EF\Delete.cshtml" />
+    <Content Include="Views\EF\Details.cshtml" />
+    <Content Include="Views\EF\Edit.cshtml" />
+    <Content Include="Views\EF\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
