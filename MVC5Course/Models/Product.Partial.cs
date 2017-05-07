@@ -3,7 +3,8 @@ namespace MVC5Course.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    
+    using ValidationAttributes;
+
     [MetadataType(typeof(ProductMetaData))]
     public partial class Product
     {
@@ -25,6 +26,7 @@ namespace MVC5Course.Models
         [Required(ErrorMessage = "請輸入商品名稱")]
         [MinLength(3), MaxLength(30)]
         [RegularExpression("(.+)-(.+)")]
+        [商品名稱必須包含Will字串(ErrorMessage = "商品名稱必須包含Will字串")]
         public string ProductName { get; set; }
         [Range(0, 9999)]
         [DisplayFormat(DataFormatString ="{0:0}",ApplyFormatInEditMode =true)]
