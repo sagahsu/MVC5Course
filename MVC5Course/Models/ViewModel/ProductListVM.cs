@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MVC5Course.Model.ViewModel
 {
+    /// <summary>
+    /// Product的VM,用來承載UI的輸入資料
+    /// </summary>
     public class ProductListVM
     {
 
