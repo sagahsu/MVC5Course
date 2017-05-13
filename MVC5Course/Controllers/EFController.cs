@@ -12,17 +12,18 @@ namespace MVC5Course.Controllers
 {
     public class EFController : Controller
     {
-        private FabricsEntities1 db = new FabricsEntities1();
-        ProductRepository rep = RepositoryHelper.GetProductRepository();
+        //private FabricsEntities1 db = new FabricsEntities1();
+        ProductRepository productRespository = RepositoryHelper.GetProductRepository();
    
         // GET: EF
         public ActionResult Index()
         {
-            var all = rep.All();//db.Product.AsQueryable();//延遲載入
-                                             //var all = db.Product.AsEnumerable();//立即載入
-                                             //var data = all.Where(p => p.isDeleted ==false && p.Active == true && p.ProductName.Contains("Black"))
-            var data = all.Where(p => p.isDeleted!=true && p.Active == true && p.ProductName.Contains("Black"))
-                    .OrderByDescending(p=>p.ProductId);
+            //var all = productRespository.All();//db.Product.AsQueryable();//延遲載入
+            //                                 //var all = db.Product.AsEnumerable();//立即載入
+            //                                 //var data = all.Where(p => p.isDeleted ==false && p.Active == true && p.ProductName.Contains("Black"))
+            //var data = all.Where(p => p.isDeleted!=true && p.Active == true && p.ProductName.Contains("Black"))
+            //        .OrderByDescending(p=>p.ProductId);
+            var data = productRespository.All(showAll:false);//具名參數
             return View(data);
         }
 
@@ -35,7 +36,7 @@ namespace MVC5Course.Controllers
             }
             //Product product = db.Product.Find(id);
             //Product product = db.Database.SqlQuery<Product>("SELECT * FROM Product WHERE ProductId=@p0", id).FirstOrDefault();
-            Product product =rep.findByProductId(id.Value);
+            Product product = productRespository.findByProductId(id.Value);
 
             if (product == null)
             {
@@ -59,8 +60,9 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Product.Add(product);
-                db.SaveChanges();
+                //db.Product.Add(product);
+                //db.SaveChanges();
+                productRespository.Create(product);
                 return RedirectToAction("Index");
             }
 
@@ -74,7 +76,8 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            //Product product = db.Product.Find(id);
+            Product product = productRespository.findByProductId(id.Value);
             if (product == null)
             {
                 return HttpNotFound();
@@ -91,8 +94,9 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(product).State = EntityState.Modified;
+                //db.SaveChanges();
+                productRespository.Update(product);
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -105,7 +109,8 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            Product product = productRespository.findByProductId(id.Value);//db.Product.Find(id);
+
              if (product == null)
             {
                 return HttpNotFound();
@@ -118,7 +123,7 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Product.Find(id);
+            Product product = productRespository.findByProductId(id);//db.Product.Find(id);
             //foreach (var item in product.OrderLine.ToList())
             //{
             //    db.OrderLine.Remove(item);
@@ -127,9 +132,10 @@ namespace MVC5Course.Controllers
             //db.OrderLine.RemoveRange(product.OrderLine);//一行抵上面四行
 
             //db.Product.Remove(product);
-           
+
             product.isDeleted = true;
-            db.SaveChanges();
+            //db.SaveChanges();
+            productRespository.Update(product);
             return RedirectToAction("Index");
         }
 
@@ -137,7 +143,8 @@ namespace MVC5Course.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
+
             }
             base.Dispose(disposing);
         }
