@@ -10,7 +10,7 @@ using MVC5Course.Models;
 
 namespace MVC5Course.Controllers
 {
-    public class EFController : Controller
+    public class EFController : BaseController
     {
         //private FabricsEntities1 db = new FabricsEntities1();
         ProductRepository productRespository = RepositoryHelper.GetProductRepository();
@@ -132,8 +132,10 @@ namespace MVC5Course.Controllers
             //db.OrderLine.RemoveRange(product.OrderLine);//一行抵上面四行
 
             //db.Product.Remove(product);
+            productRespository.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;//關閉檢驗
+            productRespository.Delete(product);
+            productRespository.UnitOfWork.Commit();
 
-            product.isDeleted = true;
             //db.SaveChanges();
             productRespository.Update(product);
             return RedirectToAction("Index");

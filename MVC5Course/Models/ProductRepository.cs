@@ -60,6 +60,11 @@ namespace MVC5Course.Models
             this.UnitOfWork.Context.Entry(product).State = EntityState.Modified;
         }
 
+        public override void Delete(Product product)
+        {
+            product.isDeleted = true;
+        }
+
         public int Create(Product product)
         {
             return Create(product);
