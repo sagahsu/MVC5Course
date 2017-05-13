@@ -16,14 +16,22 @@ namespace MVC5Course.Controllers
         ProductRepository productRespository = RepositoryHelper.GetProductRepository();
    
         // GET: EF
-        public ActionResult Index()
+        public ActionResult Index(String q)
         {
             //var all = productRespository.All();//db.Product.AsQueryable();//延遲載入
             //                                 //var all = db.Product.AsEnumerable();//立即載入
             //                                 //var data = all.Where(p => p.isDeleted ==false && p.Active == true && p.ProductName.Contains("Black"))
             //var data = all.Where(p => p.isDeleted!=true && p.Active == true && p.ProductName.Contains("Black"))
             //        .OrderByDescending(p=>p.ProductId);
-            var data = productRespository.All(showAll:false);//具名參數
+            var data = productRespository.GetProduct列表頁所有資料(true,showAll:true);//具名參數
+            //return View(data);
+            //ViewData.Model = data;
+            //ViewData["ppp"] = data;
+            if (!String.IsNullOrEmpty(q))
+            {
+                data = data.Where(p => p.ProductName.Contains(q));
+            }
+                
             return View(data);
         }
 
@@ -62,7 +70,9 @@ namespace MVC5Course.Controllers
             {
                 //db.Product.Add(product);
                 //db.SaveChanges();
-                productRespository.Create(product);
+                productRespository.Add(product);
+
+                TempData["CreateProduct_Result"] = "新增資料成功";
                 return RedirectToAction("Index");
             }
 

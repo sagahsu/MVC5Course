@@ -222,6 +222,7 @@
       <DependentUpon>Fabrics.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ValidationAttributes\商品名稱必須包含Will字串Attribute.cs" />
+    <Compile Include="Models\ViewModel\ProductListSearchVM.cs" />
     <Compile Include="Models\ViewModel\ProductVM.cs" />
     <Compile Include="Models\ViewModel\ProductListVM.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -285,6 +286,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\myBicycle.jpg" />
     <Content Include="App_Data\Fabrics.mdf" />
     <Content Include="App_Data\Fabrics_log.ldf" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -397,6 +399,7 @@
     <Content Include="Views\EF\Details.cshtml" />
     <Content Include="Views\EF\Edit.cshtml" />
     <Content Include="Views\EF\Index.cshtml" />
+    <Content Include="Views\Shared\SuccessRedirect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

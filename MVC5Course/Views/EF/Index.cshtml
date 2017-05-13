@@ -2,7 +2,19 @@
 
 @{
     ViewBag.Title = "Index";
+    //var data1 = ViewData["ppp"] as IEnumerable<MVC5Course.Models.Product>;
 }
+
+@if (TempData["CreateProduct_Result"]!= null)
+{
+    <h1>@(TempData["CreateProduct_Result"])</h1>
+}
+
+<form method="get">
+    @*<input type="text" id="q" name="q"/>*@
+    @Html.TextBox("q")
+    <input type="submit" value="搜尋" />
+</form>
 
 <h2>Index</h2>
 

@@ -65,11 +65,6 @@ namespace MVC5Course.Models
             product.isDeleted = true;
         }
 
-        public int Create(Product product)
-        {
-            return Create(product);
-        }
-
     }
 
 	public  interface IProductRepository : IRepository<Product>
