@@ -13,11 +13,12 @@ namespace MVC5Course.Controllers
     public class EFController : Controller
     {
         private FabricsEntities1 db = new FabricsEntities1();
+        ProductRepository rep = RepositoryHelper.GetProductRepository();
    
         // GET: EF
         public ActionResult Index()
         {
-            var all=db.Product.AsQueryable();//延遲載入
+            var all = rep.All();//db.Product.AsQueryable();//延遲載入
                                              //var all = db.Product.AsEnumerable();//立即載入
                                              //var data = all.Where(p => p.isDeleted ==false && p.Active == true && p.ProductName.Contains("Black"))
             var data = all.Where(p => p.isDeleted!=true && p.Active == true && p.ProductName.Contains("Black"))
@@ -33,7 +34,8 @@ namespace MVC5Course.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Product product = db.Product.Find(id);
-            Product product = db.Database.SqlQuery<Product>("SELECT * FROM Product WHERE ProductId=@p0", id).FirstOrDefault();
+            //Product product = db.Database.SqlQuery<Product>("SELECT * FROM Product WHERE ProductId=@p0", id).FirstOrDefault();
+            Product product =rep.findByProductId(id.Value);
 
             if (product == null)
             {
