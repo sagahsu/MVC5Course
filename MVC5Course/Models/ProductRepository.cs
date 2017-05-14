@@ -40,7 +40,7 @@ namespace MVC5Course.Models
 
         public Product findByProductId(int id)
         {
-            return this.All().FirstOrDefault(p=>p.ProductId == id);
+            return this.All(true).FirstOrDefault(p=>p.ProductId == id);
         }
 
         public IQueryable<Product> GetProduct列表頁所有資料(bool Active, bool showAll = false)//optional 參數

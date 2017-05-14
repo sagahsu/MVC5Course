@@ -186,7 +186,9 @@
     <Compile Include="Controllers\EFController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ActionFilter\LocalOnlyAttribute.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ActionFilter\ShareViewBagAttribute.cs" />
     <Compile Include="Models\ClientRepository.cs">
       <DependentUpon>IRepository.EF6..tt</DependentUpon>
     </Compile>

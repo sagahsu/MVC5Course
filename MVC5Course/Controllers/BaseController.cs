@@ -26,6 +26,7 @@ namespace MVC5Course.Controllers
             return PartialView("SuccessRedirect","/");
         }
 
+        [LocalOnly]
         public ActionResult Debug()
         {
             if (Request.IsAjaxRequest())

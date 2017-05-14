@@ -14,7 +14,8 @@ namespace MVC5Course.Controllers
     {
         //private FabricsEntities1 db = new FabricsEntities1();
         ProductRepository productRespository = RepositoryHelper.GetProductRepository();
-   
+
+        [OutputCache(Duration = 5,Location =System.Web.UI.OutputCacheLocation.ServerAndClient)]
         // GET: EF
         public ActionResult Index(String q)
         {
@@ -100,15 +101,25 @@ namespace MVC5Course.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int id,FormCollection formCollection)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            //    //db.Entry(product).State = EntityState.Modified;
+            //    //db.SaveChanges();
+            //    productRespository.Update(product);
+            //    return RedirectToAction("Index");
+            //}
+            Product product = productRespository.findByProductId(id);
+            //if (TryUpdateModel<Product>(product)) //前部都Binding
+            if (TryUpdateModel<Product>(product, new string[] { "ProductName", "Price","Stock"}))//指定Binding欄位
             {
-                //db.Entry(product).State = EntityState.Modified;
-                //db.SaveChanges();
                 productRespository.Update(product);
+                productRespository.UnitOfWork.Commit();
                 return RedirectToAction("Index");
             }
+
             return View(product);
         }
 
