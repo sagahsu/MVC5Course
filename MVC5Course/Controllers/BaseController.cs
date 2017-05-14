@@ -1,10 +1,12 @@
 ﻿using MVC5Course.Models;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
+    [HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
     public abstract class BaseController :Controller//ad  abstract to avoid /Base/Debug workiing
     {
         protected FabricsEntities1 db = new FabricsEntities1();

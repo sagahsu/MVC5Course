@@ -8,8 +8,19 @@ namespace MVC5Course.Controllers
 {
     public class HomeController : BaseController
     {
+        public ActionResult ViewTest()
+        {
+            return View();
+        }
+
+        public ActionResult RazerTest()
+        {
+            int[] data = new int[] { 1, 2, 3, 4, 5 };
+            return PartialView(data);
+        }
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -29,7 +40,7 @@ namespace MVC5Course.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
+            throw new ArgumentException("Error Handled!!");
             return View();
         }
 
