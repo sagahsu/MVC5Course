@@ -10,112 +10,112 @@ using MVC5Course.Models;
 
 namespace MVC5Course.Controllers
 {
-    public class ClientsController : Controller
+    public class OrdersController : Controller
     {
         private FabricsEntities1 db = new FabricsEntities1();
 
-        // GET: Clients
-        public ActionResult Index()
+        // GET: Orders
+        public ActionResult Index(int ClientId)
         {
-            var client = db.Client.Include(c => c.Occupation);
-            return View(client.Take(10));
+            var order = db.Order.Include(o => o.Client).Where(p=>p.ClientId==ClientId);
+            return View(order.Take(10));
         }
 
-        // GET: Clients/Details/5
+        // GET: Orders/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Client.Find(id);
-            if (client == null)
+            Order order = db.Order.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(order);
         }
 
-        // GET: Clients/Create
+        // GET: Orders/Create
         public ActionResult Create()
         {
-            ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName");
+            ViewBag.ClientId = new SelectList(db.Client, "ClientId", "FirstName");
             return View();
         }
 
-        // POST: Clients/Create
+        // POST: Orders/Create
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client)
+        public ActionResult Create([Bind(Include = "OrderId,ClientId,OrderDate,OrderTotal,OrderStatus")] Order order)
         {
             if (ModelState.IsValid)
             {
-                db.Client.Add(client);
+                db.Order.Add(order);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
-            return View(client);
+            ViewBag.ClientId = new SelectList(db.Client, "ClientId", "FirstName", order.ClientId);
+            return View(order);
         }
 
-        // GET: Clients/Edit/5
+        // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Client.Find(id);
-            if (client == null)
+            Order order = db.Order.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
-            return View(client);
+            ViewBag.ClientId = new SelectList(db.Client, "ClientId", "FirstName", order.ClientId);
+            return View(order);
         }
 
-        // POST: Clients/Edit/5
+        // POST: Orders/Edit/5
         // 若要免於過量張貼攻擊，請啟用想要繫結的特定屬性，如需
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientId,FirstName,MiddleName,LastName,Gender,DateOfBirth,CreditRating,XCode,OccupationId,TelephoneNumber,Street1,Street2,City,ZipCode,Longitude,Latitude,Notes")] Client client)
+        public ActionResult Edit([Bind(Include = "OrderId,ClientId,OrderDate,OrderTotal,OrderStatus")] Order order)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(order).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
-            return View(client);
+            ViewBag.ClientId = new SelectList(db.Client, "ClientId", "FirstName", order.ClientId);
+            return View(order);
         }
 
-        // GET: Clients/Delete/5
+        // GET: Orders/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Client.Find(id);
-            if (client == null)
+            Order order = db.Order.Find(id);
+            if (order == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(order);
         }
 
-        // POST: Clients/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Client client = db.Client.Find(id);
-            db.Client.Remove(client);
+            Order order = db.Order.Find(id);
+            db.Order.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
